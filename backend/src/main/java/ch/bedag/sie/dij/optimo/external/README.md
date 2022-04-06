@@ -1,0 +1,1 @@
+Dinge welche nur im Öffentlichkeitsmodul verwendet werden.

@@ -1,0 +1,1 @@
+Würde dann Texte aus irgend nem Propery-file lesen; nur Fake-Implementierung bisher.

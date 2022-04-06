@@ -1,0 +1,1 @@
+Da käme dann das frontend rein für den internen zugang (Dabbawala). Das würd ich mehr oder weniger gleich belassen wie in eKFSG (keine grossen Änderungen). Ausser man will die beiden frontends wirklich zusammen legen (wäre dann jedoch ne relativ grosse Änderung).

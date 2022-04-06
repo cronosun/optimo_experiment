@@ -1,0 +1,1 @@
+Da käme dann das frontend rein für den externen zugang. Das würd ich mehr oder weniger gleich belassen wie in eKFSG (keine grossen Änderungen).
