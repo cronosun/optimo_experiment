@@ -2,6 +2,17 @@
 
 Ist mal ein draft / entwurf mit einigen ideen, was ich empfehle anders / besser zu machen als in eKFSG. Ist jetzt nicht was fertiges was 1:1 so übernommen werden kann, wirklich nur ne ideensammlung.
 
+Was kann dieses Demo (nur `backend` ist implementiert): Spezifikation etwas vereinfacht und gewisse Dinge sind ausgelassen, aber grundsätzlich kann es das:
+
+ * Eingabe einer Rechnung über das Öffetnlichkeitsmodul (neuer name für Externer Zugang) (inklusive PDF-Dokument).
+ * Validierung (einige Felder, nicht alles) dieser eingegebenen Rechnung.
+ * Persistierung dieser Rechnung in der Datenbank.
+ * Datenimport dieser Rechnung & Dokument von Externer Zugang zu Interner Zugang (Dabbawala). (hinweis: geht in diesem Demo direkt über die Services; müssten in realtät über die HTTP-Apis laufen).
+ * Speichern der importierten Rechnung im internen Zugang; speichern der Rechnungs-Dokumentes (z.b. PDF) im Dabbawala-Dokument-Store.
+ * Freigeben einer Rechnung in Dabbawala (inkl. Rechte-Überprüfung, Status-Überprüfung und Mailversand).
+
+...inkl. Tests.
+
 ## Grundsätze
 
 Eigentlich das von hier: https://confluence.bedag.ch/display/~simon.ruoss@bedag.ch/Notes+1.4
@@ -30,14 +41,14 @@ Einige Beispiele aus den Tests:
 
 Ich schlage vor, möglichst viel vom UI ins Backend zu verlagern, das UI möglichst dumm halten. Wieso:
 
- * Testing, Testing, Testing! :-) wie hier gezeigt wird, macht das das Testing sehr einfach, wenn wir alles zusammen haben und noch gewisse Logik noch im UI.
+ * Testing, Testing, Testing! :-) wie hier gezeigt wird, macht das das Testing sehr einfach, wenn wir alles zusammen im backend haben und wenig Logik im UI.
  * Änderungen / changes können schnell implementiert werden (eine Stelle; Test anpassen; wenig Gefahr, dass was vergessen geht).  
  * Es handelt sich ja um eine Fachanwendung, spätestens nach einer Woche wissen die Leute was Mandatory ist und wie die Felder aussehen müssen.
- * Sind ja nicht millionen von Requests, lieber mal nen Request zuviel an den Server sckicken und den dort validieren lassen...
+ * Sind ja nicht millionen von Requests, lieber mal nen Request zuviel an den Server schicken und den dort validieren lassen...
 
 Implikationen für den Endbenutzer:
 
-Aktionen werden im allgemeinen (man kann immer noch Ausnahmen machen) immer aktivierbar sein, auch wenn man keine Rechte hat oder noch nicht alles ausgefüllt hat:
+Aktionen ("Speichern", "Löschen", "Freigeben", ...) werden im allgemeinen (man kann immer noch Ausnahmen machen, dort wo der Kunde sich das wünscht) immer aktivierbar sein, auch wenn man keine Rechte hat oder noch nicht alles ausgefüllt hat:
 
  * D.h. so was wie in der Spez wird es nicht geben: "_Das System lässt den Button "Speichern" deaktiviert, er wird nicht aktiv resp. klickbar._" (https://confluence.bedag.ch/display/DIJ/UC20+Antrag+Kostengutsprache+erstellen)
  * Der Benutzer kann immer auf "Speichern" klicken, erhält dann aber Meldungen, wenn Felder noch nicht ausgefüllt sind oder sonst ungültige Daten haben (oder der Benutzer nicht die benötigten rechte hat).
@@ -106,7 +117,7 @@ Schauen wir, dass die Entities intern und extern immer dieselbe UUID behalten? I
 
 Die meisten pojos können für den externen und internen zugang geshared werden, jedoch nicht immer. Was machen wir da vom naming her:
 
- * Lassen den namen, dann haben wir halt zum teil 2 pojos welche `Rechnung` heissen (dann schaut man beim importieren; ggf. alias import)
+ * Lassen den namen, dann haben wir halt zum teil 2 pojos welche `Rechnung` heissen (dann schaut man beim importieren; ggf. alias import; hinweis: für andere Dinge wie Services, Entities oder Repositories geht das nicht, da motzt Spring).
  * Wir prefixen die, wenn ja, wie? Vorschlag:
    * `InternalRechnung`
    * `ExternalRechnung` 
