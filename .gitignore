@@ -1,2 +1,5 @@
 # Project exclude paths
 /backend/target/
+/backend/backend.iml
+/backend/.idea/
+/.idea/
